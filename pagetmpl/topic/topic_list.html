@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block content %}
+<table class="table table-sm">
+  <thead>
+    <tr class="text-light bg-dark">
+      <th>發起時間</th>
+      <th>討論主題</th>
+      <th>發起人</th>
+      <th>回覆時間</th> 
+      <th>人氣</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for topic in topic_list %}
+    <tr>
+      <td>{{topic.created|date:"Y/m/d H:i"}}</td>
+      <td>
+        <a href="{% url 'topic_view' topic.id %}">{{ topic.subject }}</a>
+      </td>
+      <td>{{topic.author}}</td>
+      <td>{{topic.replied|date:"Y/m/d H:i"}}</td>
+      <td>
+        <span class="badge badge-primary">{{ topic.hits }}</span>
+        <span class="badge badge-danger">{{ topic.reply_set.count }}</span>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% include "pagination.html" %}
+{% endblock %}
